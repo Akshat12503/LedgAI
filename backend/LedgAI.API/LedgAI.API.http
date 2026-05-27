@@ -1,0 +1,6 @@
+@LedgAI.API_HostAddress = http://localhost:5126
+
+GET {{LedgAI.API_HostAddress}}/api/transactions
+Accept: application/json
+
+###
