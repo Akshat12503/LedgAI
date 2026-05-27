@@ -1,0 +1,27 @@
+<div style="padding: 2rem; font-family: sans-serif;">
+  <h2>LedgAI - Financial Transaction Ledger</h2>
+  <hr>
+  
+  <table border="1" cellpadding="10" cellspacing="0" style="width: 100%; border-collapse: collapse; margin-top: 1rem;">
+    <thead style="background-color: #f2f2f2;">
+      <tr>
+        <th>ID</th>
+        <th>Raw Merchant String</th>
+        <th>AI Cleaned Name</th>
+        <th>Amount</th>
+        <th>Confidence Score</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let t of transactions">
+        <td>{{ t.transactionId }}</td>
+        <td><code>{{ t.rawMerchantString }}</code></td>
+        <td style="font-weight: bold; color: #2c3e50;">{{ t.cleanedMerchantName || 'Processing...' }}</td>
+        <td style="color: #e74c3c; font-weight: bold;">${{ t.amount }}</td>
+        <td>{{ t.confidenceScore ? t.confidenceScore.toFixed(1) + '%' : 'N/A' }}</td>
+        <td>{{ t.transactionDate | date:'mediumDate' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

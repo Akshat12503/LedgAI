@@ -10,6 +10,15 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(connectionString));
 
+// 3. Define CORS Policy to explicitly trust and allow your Angular client (Port 4200)
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowAngularClient",
+        policy => policy.WithOrigins("http://localhost:4200")
+                        .AllowAnyMethod()
+                        .AllowAnyHeader());
+});
+
 // Add standard Web API services
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
@@ -17,12 +26,8 @@ builder.Services.AddEndpointsApiExplorer();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-// if (app.Environment.IsDevelopment())
-// {
-//     app.UseSwagger();   // Commented out
-//     app.UseSwaggerUI(); // Commented out
-// }
+// 4. Activate the CORS routing rule (CRITICAL: Must be called before MapControllers)
+app.UseCors("AllowAngularClient");
 
 app.UseHttpsRedirection();
 app.UseAuthorization();
